@@ -1,5 +1,4 @@
-# ptsp
-
+# 大学生兼职服务管理平台（画大饼ing.jpg）
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
