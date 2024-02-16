@@ -1,3 +1,4 @@
+import request from '@/utils/axios'
 export function register(data){
     return request({
         url:'/zyy/user/register',
@@ -9,7 +10,7 @@ export function register(data){
 export function getEmailCode(data){
     return request({
         url:'/zyy/user/getEmailCode',
-        methodP:'POST',
+        method:'POST',
         data
     })
 }
