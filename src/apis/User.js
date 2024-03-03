@@ -1,5 +1,5 @@
 import request from '@/utils/axios'
-export function register(data){
+export function userRegister(data){
     return request({
         url:'/zyy/user/register',
         method:'POST',
@@ -7,7 +7,7 @@ export function register(data){
     })
 }
 
-export function emailLogin(data){
+export function userEmailLogin(data){
     return request({
         url:'/zyy/user/emailLogin',
         method:'POST',
@@ -15,7 +15,7 @@ export function emailLogin(data){
     })
 }
 
-export function accountLogin(data){
+export function userAccountLogin(data){
     return request({
         url:'/zyy/user/accountLogin',
         method:'POST',
@@ -23,26 +23,23 @@ export function accountLogin(data){
     })
 }
 
-export function updateByUserId(data){
+export function updateByUserId(){
     return request({
         url:'/zyy/user/updateByUserId',
-        method:'POST',
-        data
+        method:'POST'
     })
 }
 
-export function getUserMessage(data){
+export function getUserMessage(){
     return request({
         url:'/zyy/user/getUserMessage',
-        method:'GET',
-        data
+        method:'GET'
     })
 }
 
-export function getAdmit(data){
+export function getAdmit(){
     return request({
         url:'/zyy/user/getAdmit',
-        method:'GET',
-        data
+        method:'GET'
     })
 }
