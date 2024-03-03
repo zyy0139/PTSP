@@ -38,3 +38,11 @@ export function getUserMessage(data){
         data
     })
 }
+
+export function getAdmit(data){
+    return request({
+        url:'/zyy/user/getAdmit',
+        method:'GET',
+        data
+    })
+}
