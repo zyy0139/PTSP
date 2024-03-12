@@ -6,7 +6,7 @@
   <head>
     <meta charset="UTF-8">
     <title>该页面不存在</title>
-    <link rel="shortcut icon" href="favicon.ico">
+    <link rel="shortcut icon" href="../../public/favicon.ico">
     <link rel="stylesheet" type="text/css" href="../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="../assets/css/all.css" />
   </head>
@@ -31,7 +31,6 @@
   font-size: 18px;
 }
 .notfind_wrapper a{
-  position: absolute;
   position: absolute;
   top: 43%;
   left: 47%;
