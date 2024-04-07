@@ -13,7 +13,7 @@ function handleBackLogin() {
       <slot name="backIcon" />
     </div>
     <div id="icon-logo" class="slot">
-<!--      <img src="../assets/logo.png" alt="logo" height="48" width="78" @click="handleBackLogin">-->
+      <img src="../assets/logo.png" alt="logo" height="90" width="200" @click="handleBackLogin">
     </div>
     <div id="avatar" class="slot">
       <slot name="avatar" />
@@ -40,8 +40,8 @@ function handleBackLogin() {
 #icon-logo {
   margin-right: auto;
   margin-left: 3%;
-  background-color: #0093E9;
-  background-image: linear-gradient(151deg, #0093E9 0%, #80D0C7 68%);
+  background-color: rgb(136, 136, 136);
+  background-image: linear-gradient(151deg, #fcfdfd 0%, #fcfcfc 68%);
   border-radius: 10px;
 }
 #avatar {
