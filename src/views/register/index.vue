@@ -1,9 +1,12 @@
 <script setup>
-import { reactive, ref } from 'vue'
-import { getEmailCode, register } from '@/apis/user'
+import {reactive, ref} from 'vue'
+import { userRegister } from '@/apis/User.js'
+import { companyRegister } from  '@/apis/Company.js'
+import { getEmailCode } from '@/apis/Email.js'
 import { ElMessage } from 'element-plus'
 import { useRouter, useRoute } from 'vue-router'
 import Captcha from "@/components/captcha.vue";
+import PassportHeader from '@/components/layoutHeader.vue'
 
 const registerFrom=ref(null)
 const title=ref('')
@@ -20,6 +23,7 @@ const registerData=reactive({
   email:'',
   password:'',
   repassword:'',
+  type:'',
   emailCode:'',
   captcha:''
 })
@@ -54,11 +58,8 @@ function buttonGetEmailCode(registerFrom,textGetCodeButton){
       getEmailCode({ email: registerData.email }).then( res => {
         if (res.code === 200) {
           console.log('send')
-        } else if (res.code === 300) {
-          //  邮箱已经注册
-          emailErrorMsg.value = '该邮箱已经注册账号'
-        } else if (res.code === 303) {
-          emailErrorMsg.value = '该邮箱未注册账号'
+        }else {
+          emailErrorMsg.value='该邮箱已注册'
         }
       }, rej => {
         console.log(rej)
@@ -138,6 +139,9 @@ const rule=reactive({
     {required: true,message: '两次密码输入不一致',trigger: 'blur'},
     {validator: checkRePassword,trigger: 'blur'}
   ],
+  type:[
+    {required: true,message: '请选择注册类型',trigger: 'blur'}
+  ],
   emailCode:[
     {required: true,message: '验证码不能为空',trigger: 'blur'},
     {min: 4,max: 4,message: '验证码格式错误',trigger: 'blur'}
@@ -152,8 +156,36 @@ const rule=reactive({
 function handleRegister(registerForm){
   registerForm.validate(isvalid =>{
     if(isvalid){
-      register({account:registerData.account,email:registerData.email,password:registerData.password,
-        emailCode:registerData.emailCode}).then(res =>{
+      if(registerData.type==="student"){
+        userRegister({account:registerData.account,email:registerData.email,password:registerData.password,
+          emailCode:registerData.emailCode}).then(res =>{
+          if(res.code === 200){ //注册成功
+            ElMessage({
+              type:'success',
+              message:'注册成功'
+            })
+            router.push('/login')
+          }else if(res.code === 400) { //邮箱存在
+            ElMessage({
+              type: 'error',
+              message: '该邮箱已注册'
+            })
+            //重置界面
+            registerForm.resetFields(['account', 'email', 'password', 'rePassword', 'emailCode', 'captcha'])
+            noMatchCode.value = !noMatchCode.value
+          }else if(res.code===500){ //验证码错误
+            ElMessage({
+              type:'error',
+              message:'验证码错误'
+            })
+            //重置验证码
+            registerForm.resetFields(['emailCode'])
+            noMatchCode.value=!noMatchCode.value
+          }
+        })
+      }else {
+        companyRegister({account:registerData.account,email:registerData.email,password:registerData.password,
+          emailCode:registerData.emailCode}).then(res =>{
           if(res.code===200){ //注册成功
             ElMessage({
               type:'success',
@@ -177,7 +209,8 @@ function handleRegister(registerForm){
             registerForm.resetFields(['emailCode'])
             noMatchCode.value=!noMatchCode.value
           }
-      })
+        })
+      }
     }
   })
 }
@@ -185,36 +218,44 @@ function handleRegister(registerForm){
 
 <template>
   <div id="content">
-<!--      <passport-header/>-->
+    <passport-header/>
     <div id="body">
       <div id="body-header">
         <router-link to ='login'>已有帐号？去登陆</router-link>
       </div>
       <div id="form-content">
-        <el-form ref="registerFrom":model="registerData":rules="rule" label-width="auto" label-position="left">
-          <span id="form-title">{{title}}}</span>
-          <el-form-item label="账号" prop="account" oninput="value=value.replace(/[^0-9.]/g,'')">
+        <el-form ref="registerFrom" :model="registerData" :rules="rule" label-width="auto">
+          <span id="form-title">{{title}}</span>
+          <el-form-item label="账号:" prop="account" >
             <el-input v-model="registerData.account"/>
           </el-form-item>
-          <el-form-item label="邮箱" prop="email">
+          <el-form-item label="邮箱:" prop="email">
             <el-input v-model="registerData.email"/>
           </el-form-item>
-          <el-form-item label="密码" prop="password">
+          <el-form-item label="密码:" prop="password">
             <el-input v-model="registerData.password" type="password"/>
           </el-form-item>
-          <el-form-item label="重复密码" prop="repassword">
+          <el-form-item label="重复密码:" prop="repassword">
             <el-input v-model="registerData.repassword" type="password"/>
           </el-form-item>
-          <el-form-item label="邮箱验证码" prop="emailCode">
+          <el-form-item label="注册类型:" prop="type">
+            <el-radio-group v-model="registerData.type">
+              <el-radio value="student">学生用户</el-radio>
+              <el-radio value="company">公司用户</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item label="邮箱验证码:" prop="emailCode">
               <el-input v-model="registerData.emailCode">
                 <template #append>
-                  <el-button type="primary":disabled="buttonGetCode.isCodeCd" @click="buttonGetEmailCode(registerFrom,textGetCodeButton)">
+                  <el-button type="primary"
+                             :disabled="buttonGetCode.isCodeCd"
+                             @click="buttonGetEmailCode(registerFrom,textGetCodeButton)">
                     <span id="text-getCode-button" ref="textGetCodeButton">{{buttonGetCode.buttonText}}</span>
                   </el-button>
                 </template>
               </el-input>
           </el-form-item>
-          <el-form-item label="图形验证码" prop="captcha">
+          <el-form-item label="图形验证码:" prop="captcha">
             <el-input v-model="registerData.captcha">
               <template #append>
                 <captcha :no-match-code="noMatchCode" @get-captcha="handleGetCaptcha"/>
