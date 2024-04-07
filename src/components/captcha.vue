@@ -3,7 +3,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, defineEmits, defineProps, watch } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { throttle } from '@/utils/debounceThrottle'
 
 const emits = defineEmits(['getCaptcha'])
