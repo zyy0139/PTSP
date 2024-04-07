@@ -23,3 +23,10 @@ export function getResumeList(params){
         params
     })
 }
+
+export function getResume(){
+    return request({
+        url:'/zyy/resume/getResume',
+        method:'GET'
+    })
+}

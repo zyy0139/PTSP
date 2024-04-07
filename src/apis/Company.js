@@ -1,6 +1,6 @@
 import request from '@/utils/axios.js'
 
-export function companyRegister(date){
+export function companyRegister(data){
     return request({
         url:'/zyy/company/register',
         method:'POST',

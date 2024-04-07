@@ -23,10 +23,11 @@ export function userAccountLogin(data){
     })
 }
 
-export function updateByUserId(){
+export function updateByUserId(data){
     return request({
         url:'/zyy/user/updateByUserId',
-        method:'POST'
+        method:'POST',
+        data
     })
 }
 
@@ -41,5 +42,20 @@ export function getAdmit(){
     return request({
         url:'/zyy/user/getAdmit',
         method:'GET'
+    })
+}
+
+export function getName(){
+    return request({
+        url:'/zyy/user/getName',
+        method:'GET'
+    })
+}
+
+export function resetPassword(data){
+    return request({
+        url:'/zyy/user/updatePassword',
+        method:'POST',
+        data
     })
 }
