@@ -17,6 +17,9 @@ dependencies:
   echarts:
     specifier: ^5.5.0
     version: 5.5.0
+  element-china-area-data:
+    specifier: ^6.1.0
+    version: 6.1.0
   element-plus:
     specifier: ^2.6.1
     version: 2.6.1(vue@3.4.21)
@@ -38,6 +41,9 @@ dependencies:
   stream:
     specifier: ^0.0.2
     version: 0.0.2
+  v-region:
+    specifier: ^3.0.0
+    version: 3.0.0(vue@3.4.21)
   vue-router:
     specifier: ^4.2.5
     version: 4.3.0(vue@3.4.21)
@@ -1631,6 +1637,10 @@ packages:
       supports-color: 7.2.0
     dev: false
 
+  /china-division@2.7.0:
+    resolution: {integrity: sha512-4uUPAT+1WfqDh5jytq7omdCmHNk3j+k76zEG/2IqaGcYB90c2SwcixttcypdsZ3T/9tN1TTpBDoeZn+Yw/qBEA==}
+    dev: false
+
   /chokidar@3.6.0:
     resolution: {integrity: sha512-7VT13fmjotKpGipCW9JEQAusEPE+Ei8nl6/g4FBAmIm0GOOLMua9NDDo/DWp0ZAxCr3cPq5ZpBqmPAQgDda2Pw==}
     engines: {node: '>= 8.10.0'}
@@ -2394,6 +2404,12 @@ packages:
 
   /electron-to-chromium@1.4.699:
     resolution: {integrity: sha512-I7q3BbQi6e4tJJN5CRcyvxhK0iJb34TV8eJQcgh+fR2fQ8miMgZcEInckCo1U9exDHbfz7DLDnFn8oqH/VcRKw==}
+    dev: false
+
+  /element-china-area-data@6.1.0:
+    resolution: {integrity: sha512-IkpcjwQv2A/2AxFiSoaISZ+oMw1rZCPUSOg5sOCwT5jKc96TaawmKZeY81xfxXsO0QbKxU5LLc6AirhG52hUmg==}
+    dependencies:
+      china-division: 2.7.0
     dev: false
 
   /element-plus@2.6.1(vue@3.4.21):
@@ -5201,6 +5217,23 @@ packages:
   /uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
+    dev: false
+
+  /v-dropdown@3.0.0(vue@3.4.21):
+    resolution: {integrity: sha512-sDBiHhTjm0/eLmC83vUbOIHXNTlQD30w+usrh779OG+aNc/5vqyFQbSBPGekvD7pQPbWSPc5esVT8jcqfLRnrg==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      vue: 3.4.21
+    dev: false
+
+  /v-region@3.0.0(vue@3.4.21):
+    resolution: {integrity: sha512-VY37/x8RPBDLrjKYAj4C/BUazotp8tUhUNOnGDrf2CTVz08x7eWi2nBEE2nnKx14fBqCWIc+cqnzO83qqMJfFQ==}
+    peerDependencies:
+      vue: ^3.2.0
+    dependencies:
+      v-dropdown: 3.0.0(vue@3.4.21)
+      vue: 3.4.21
     dev: false
 
   /validate-npm-package-license@3.0.4:

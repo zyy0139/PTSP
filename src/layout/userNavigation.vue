@@ -85,7 +85,7 @@ function handleCollapse(){
             <span>公司信息</span>
           </template>
         </el-menu-item>
-        <el-menu-item>
+        <el-menu-item index="recruitList">
           <el-icon><Promotion /></el-icon>
           <template #title>
             <span>招聘信息</span>

@@ -13,6 +13,7 @@
     "@vue/cli-service": "^5.0.8",
     "axios": "^1.6.7",
     "echarts": "^5.5.0",
+    "element-china-area-data": "^6.1.0",
     "element-plus": "^2.6.1",
     "mitt": "^3.0.1",
     "passport-jwt": "^4.0.1",
@@ -20,6 +21,7 @@
     "pinia": "^2.1.7",
     "process": "^0.11.10",
     "stream": "^0.0.2",
+    "v-region": "^3.0.0",
     "vue-router": "^4.2.5",
     "vue-template-compiler": "^2.7.16",
     "webpack": "^5.90.3"
