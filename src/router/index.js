@@ -59,6 +59,12 @@ export const constantRoutes=[
                 name: 'userResume',
                 component: () => import('@/views/resume/index.vue'),
                 meta: { title: '简历信息' }
+            },
+            {
+                path: 'recruitList',
+                name: 'recruitList',
+                component: () => import('@/views/recruitList/index.vue'),
+                meta: { title: '招聘信息列表' }
             }
         ]
     }
