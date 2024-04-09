@@ -1,10 +1,10 @@
 import request from "@/utils/axios.js"
 
-export function addDelivery(params){
+export function addDelivery(data){
     return request({
         url:'/zyy/delivery/addDelivery',
         method:'POST',
-        params
+        data
     })
 }
 

@@ -40,10 +40,10 @@ export function getMessageList(params){
     })
 }
 
-export function getMessageByType(params){
+export function getMessageBySearch(params){
     return request({
-        url:'/zyy/recruit/getMessageByType',
-        method:'GET',
+        url: '/zyy/recruit/getMessageBySearch',
+        method: 'GET',
         params
     })
 }
