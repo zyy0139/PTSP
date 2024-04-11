@@ -28,13 +28,16 @@ export const constantRoutes=[
         name: '404',
         component: () => import('@/components/404.vue'),
         meta: { isSidebar: false, tokenUse: false }
-    },
+    }
+]
+
+export const asyncRouters=[
     {
         path:'/user',
         name:'user',
         component: () => import('@/layout/userNavigation.vue'),
         redirect: '/user/home',
-        meta:{ isSidebar: false, tokenUse: false},
+        meta:{ isSidebar: false, tokenUse: true},
         children:[
             {
                 path: 'home',
@@ -61,30 +64,47 @@ export const constantRoutes=[
                 meta: { title: '简历信息' }
             },
             {
+                path: 'companyList',
+                name: 'companyList',
+                component: () => import('@/views/companyList/index.vue'),
+                meta: { title: '公司信息列表' }
+            },
+            {
                 path: 'recruitList',
                 name: 'recruitList',
                 component: () => import('@/views/recruitList/index.vue'),
                 meta: { title: '招聘信息列表' }
             }
         ]
+    },
+    {
+        path:'/company',
+        name:'company',
+        component: () => import('@/layout/companyNavigation.vue'),
+        redirect: '/company/home',
+        meta:{ isSidebar: false, tokenUse: true},
+        children:[
+            {
+                path: 'home',
+                name: 'companyHome',
+                component: () => import('@/views/home/companyHome/index.vue'),
+                meta: { title: '公司主页' }
+            },
+            {
+                path: 'changePassword',
+                name: 'changePassword',
+                component: () => import('@/views/resetPassword/resetPasswordHome/index.vue'),
+                meta: { title: '修改密码' }
+            },
+            {
+                path: 'message',
+                name: 'companyMessage',
+                component: () => import('@/views/message/company/index.vue'),
+                meta: { title: '公司信息' }
+            }
+        ]
     }
 ]
-
-// export const asyncRouters=[
-//     {
-//         path: '/userHome',
-//         name: 'userHome',
-//         recruitTable: () => import('@/views/home/userHome/index.vue'),
-//         children: [
-//             {
-//                 path: '/changePassword',
-//                 name: 'changePassword',
-//                 recruitTable: () => import('@/views/resetPassword/resetPasswordHome/index.vue'),
-//                 meta: { title: '修改密码' }
-//             }
-//         ]
-//     }
-// ]
 
 const creatRouterOption={
     history: createWebHistory(),
@@ -101,18 +121,18 @@ export function asyncAddRouter(){
     const routerStore = userStores()
     routerStore.isLoadAsyncRouter = true
     router.removeRoute('404')
-    // asyncRouters.forEach(item => {
-    //     router.addRoute(item)
-    // })
+    asyncRouters.forEach(item => {
+        router.addRoute(item)
+    })
 }
 
-// export function resetRouter() {
-//     asyncRouters.forEach(item => {
-//         if (item.name !== '404') {
-//             router.removeRoute(item.name)
-//         }
-//     })
-// }
+export function resetRouter() {
+    asyncRouters.forEach(item => {
+        if (item.name !== '404') {
+            router.removeRoute(item.name)
+        }
+    })
+}
 
 
 export default router
