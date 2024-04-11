@@ -38,3 +38,18 @@ export function updateByCompanyId(data){
         data
     })
 }
+
+export function getCompanyList(params){
+    return request({
+        url: '/zyy/company/getCompanyList',
+        method: 'GET',
+        params
+    })
+}
+
+export function getName(){
+    return request({
+        url: '/zyy/company/getName',
+        method: 'GET'
+    })
+}

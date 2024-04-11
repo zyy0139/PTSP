@@ -47,3 +47,11 @@ export function getMessageBySearch(params){
         params
     })
 }
+
+export function getListByCompanyName(params){
+    return request({
+        url: '/zyy/recruit/getByCompanyName',
+        method: 'GET',
+        params
+    })
+}
