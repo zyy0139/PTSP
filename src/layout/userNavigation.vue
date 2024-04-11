@@ -4,7 +4,7 @@ import { HomeFilled, UserFilled, Management,
          Fold, Expand } from "@element-plus/icons-vue";
 import { getName } from '@/apis/User'
 import { userStores } from '@/store/user'
-// import { resetRouter } from '@/router'
+import { resetRouter } from '@/router'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { ref } from 'vue'
@@ -32,7 +32,7 @@ function handleLogOut(command) {
   if (command === 'goOut') {
     userStore.$reset()
     userStore.resetUserToken()
-    // resetRouter()
+    resetRouter()
     router.push('/')
     ElMessage({
       type: 'success',
@@ -65,21 +65,15 @@ function handleCollapse(){
             <span>系统首页</span>
           </template>
         </el-menu-item>
-        <el-sub-menu>
-          <template #title>
-            <el-icon><UserFilled /></el-icon>
-            <span>个人中心</span>
-          </template>
-          <el-menu-item index="message">
-            <el-icon><Management /></el-icon>
-            <span>个人信息</span>
-          </el-menu-item>
-          <el-menu-item index="resume" >
-            <el-icon><List /></el-icon>
-            <span>简历信息</span>
-          </el-menu-item>
-        </el-sub-menu>
-        <el-menu-item>
+        <el-menu-item index="message">
+          <el-icon><Management /></el-icon>
+          <span>个人信息</span>
+        </el-menu-item>
+        <el-menu-item index="resume" >
+          <el-icon><List /></el-icon>
+          <span>简历信息</span>
+        </el-menu-item>
+        <el-menu-item index="companyList">
           <el-icon><Grid /></el-icon>
           <template #title>
             <span>公司信息</span>
