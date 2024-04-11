@@ -157,7 +157,7 @@ function userLoginSuccess(res){
 function companyLoginSuccess(res){
   isLogin.value=false
   asyncAddRouter()
-  router.push('')
+  router.push('company')
 }
 
 function accountLogin(accountLoginForm){
