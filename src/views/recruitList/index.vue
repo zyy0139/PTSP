@@ -71,7 +71,6 @@ onMounted(() => {
 })
 
 function handleGetRecruitList(page) {
-  console.log(isSearch.value)
   if(!isSearch){
     getRecruitListBySearch(page)
   }else {

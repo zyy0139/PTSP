@@ -1,7 +1,6 @@
 <script setup>
-import { ref,inject, defineProps } from 'vue'
+import { ref,inject, defineProps, defineEmits } from 'vue'
 import { ElMessage } from 'element-plus'
-import emitter from '@/utils/mitt'
 import { useRouter } from 'vue-router'
 import { addDelivery } from '@/apis/Delivery'
 import { formatDate } from '@/utils/formatDate'
@@ -93,7 +92,7 @@ function handleExpand(row){
         </el-table-column>
           <el-table-column label="操作" width="200" fixed="right">
             <template #default="scope">
-              <el-button type="text" @click="handleExpand(scope.row)">查看详情</el-button>
+              <el-button type="text" @click="handleExpand(scope.row,scope.$index)">查看详情</el-button>
               <el-popconfirm
                   title="确认投递？"
                   @confirm="handleAddDelivery"
@@ -113,7 +112,7 @@ function handleExpand(row){
       <el-pagination
         background
         layout="prev, pager, next"
-        :total="count"
+        :total="props.count"
         :page-size="5"
         hide-on-single-page
         @current-change="(page) => {emits('turnPage',{page: page, pageSize: 5})}"
