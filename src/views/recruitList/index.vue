@@ -100,6 +100,7 @@ function getRecruitListBySearch(params = {page: 1, pageSize: 5}) {
         type: 'info',
         message: '暂无符合条件的招聘信息'
       })
+      updateLoading(false)
     } else {
       ElMessage({
         type: 'error',
