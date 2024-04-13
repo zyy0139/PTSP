@@ -2,7 +2,7 @@ import request from '@/utils/axios.js'
 
 export function sendRecruit(data){
     return request({
-        url:'/zyy/recruit/senRecruit',
+        url:'/zyy/recruit/sendRecruit',
         method:'POST',
         data
     })
@@ -51,6 +51,14 @@ export function getMessageBySearch(params){
 export function getListByCompanyName(params){
     return request({
         url: '/zyy/recruit/getByCompanyName',
+        method: 'GET',
+        params
+    })
+}
+
+export function getListByCompanyId(params){
+    return request({
+        url: '/zyy/recruit/getByCompanyId',
         method: 'GET',
         params
     })
