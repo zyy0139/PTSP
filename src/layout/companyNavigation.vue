@@ -61,21 +61,21 @@ function handleCollapse(){
         <span id="logo-text" v-show="!isCollapse">大学生兼职管理平台</span>
       </div>
       <el-menu router id="menu" default-active="/" :collapse="isCollapse">
-        <el-menu-item index="/home">
+        <el-menu-item index="home">
           <el-icon><HomeFilled /></el-icon>
           <template #title>
             <span>系统首页</span>
           </template>
         </el-menu-item>
-        <el-menu-item>
+        <el-menu-item index="message">
           <el-icon><Management /></el-icon>
           <span>公司信息</span>
         </el-menu-item>
-        <el-menu-item>
+        <el-menu-item index="recruitManage">
           <el-icon><Promotion /></el-icon>
           <span>招聘信息</span>
         </el-menu-item>
-        <el-menu-item>
+        <el-menu-item index="resumeManage">
           <el-icon><List /></el-icon>
           <span>简历管理</span>
         </el-menu-item>

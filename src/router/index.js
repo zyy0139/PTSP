@@ -109,7 +109,13 @@ export const asyncRouters=[
                 path: 'recruitManage',
                 name: 'recruitManage',
                 component: () => import('@/views/recruitManage/index.vue'),
-                meta: { title: '招聘信息管理', isSidebar: false, tokenUse: true  }
+                meta: { title: '招聘管理', isSidebar: false, tokenUse: true  }
+            },
+            {
+                path: 'resumeManage',
+                name: 'resumeManage',
+                component: () => import('@/views/resumeManage/index.vue'),
+                meta: { title: '简历管理', isSidebar: false, tokenUse: true  }
             }
         ]
     },
