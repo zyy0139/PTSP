@@ -63,3 +63,10 @@ export function getListByCompanyId(params){
         params
     })
 }
+
+export function getCareerList(){
+    return request({
+        url: '/zyy/recruit/getCareerList',
+        method: 'GET'
+    })
+}
