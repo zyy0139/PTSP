@@ -19,7 +19,7 @@ const props = defineProps({
   }
 })
 
-const emits = defineEmits(['turnPage','getRecruitMessage','addDelivery'])
+const emits = defineEmits(['turnPage'])
 const router = useRouter()
 const isLoading = inject('isLoading')
 const updateLoading = inject('updateLoading')
@@ -40,10 +40,19 @@ function handleAddDelivery(){
   updateLoading(true)
   addDelivery({recruitId: recruitId.value, companyName: companyName.value}).then(res => {
     if(res.code === 200){
-      emits('addDelivery')
       ElMessage({
         type:'success',
         message: '投递成功'
+      })
+    }else if(res.code === 421){
+      ElMessage({
+        type: 'warning',
+        message: '该岗位已无空余名额'
+      })
+    }else if (res.code === 401){
+      ElMessage({
+        type: 'warning',
+        message: '您已经投递过该岗位'
       })
     }else {
       ElMessage({
@@ -135,7 +144,7 @@ function handleExpand(row){
 }
 .expand-text {
   padding: 10px;
-  background-color: #fff;
+  background-color: #f5f5f5;
   border-radius: 5px;
 }
 </style>
