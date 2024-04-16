@@ -1,10 +1,9 @@
 <script setup>
-import { ref,inject, defineProps, defineEmits, provide } from 'vue'
+import {ref, inject, defineProps, defineEmits, provide, reactive} from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
-import { deleteRecruit } from '@/apis/Recruit'
+import { deleteRecruit, getMessage } from '@/apis/Recruit'
 import { formatDate } from '@/utils/formatDate'
-import addOrUpRecruitDrawer from '@/views/recruitManage/components/addOrUpRecruitDrawer.vue'
 
 const props = defineProps({
   recruitList: {
@@ -25,24 +24,36 @@ const emits = defineEmits(['turnPage'])
 const router = useRouter()
 const isLoading = inject('isLoading')
 const updateLoading = inject('updateLoading')
-const recruitId = ref('')
 const table = ref(null)
-const isShowDrawer = inject('isShowDrawer')
+const recruitId = inject('recruitId')
 const updateShowDrawer = inject('updateShowDrawer')
 const updateDrawerTitle = inject('updateDrawerTitle')
-const updateAddOrUpdate = inject('updateAddOrUpdate')
+const updateRecruitId = inject('updateRecruitId')
+const drawerMessageData = inject('drawerMessageData')
 
 function getRecruitId(index){
-  recruitId.value=props.recruitList[index].recruitId
+  updateRecruitId(props.recruitList[index].recruitId)
 }
-
-provide('recruitId', recruitId)
 
 function handleUpdateRecruit(index){
   getRecruitId(index)
   updateShowDrawer(true)
   updateDrawerTitle('修改招聘信息')
-  updateAddOrUpdate(false)
+  getMessage({recruitId: recruitId.value}).then(res => {
+    if(res.code === 200) {
+      drawerMessageData.career = res.data.career
+      drawerMessageData.type = res.data.type
+      drawerMessageData.number = res.data.number
+      drawerMessageData.message = res.data.message
+      drawerMessageData.salary = res.data.salary
+      drawerMessageData.freefl = res.data.freefl
+    }else {
+      ElMessage({
+        type: 'error',
+        message: '获取招聘信息失败'
+      })
+    }
+  })
 }
 
 function handleDeleteRecruit(){
@@ -103,7 +114,6 @@ function handleDeleteRecruit(){
           </template>
         </el-table-column>
       </el-table>
-      <add-or-up-recruit-drawer />
     </div>
     <div class="pagination">
       <el-pagination

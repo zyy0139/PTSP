@@ -8,6 +8,25 @@ import addOrUpRecruitDrawer from '@/views/recruitManage/components/addOrUpRecrui
 const recruitDataList = reactive([])
 const recruitCount = ref(0)
 const isLoading = ref(false)
+const recruitId = ref('')
+
+const drawerMessageData = reactive({
+  career: '',
+  type: '',
+  number: '',
+  message: '',
+  salary: '',
+  freefl: ''
+})
+
+provide('drawerMessageData', drawerMessageData)
+
+const updateRecruitId = (id) => {
+  recruitId.value = id
+}
+
+provide('recruitId', recruitId)
+provide('updateRecruitId', updateRecruitId)
 
 const updateLoading = (status) => {
   isLoading.value = status
@@ -32,14 +51,6 @@ const updateDrawerTitle= (Title) =>{
 
 provide('drawerTitle', drawerTitle)
 provide('updateDrawerTitle', updateDrawerTitle)
-
-const isAddOrUpdate = ref(false)
-const updateAddOrUpdate = (isAdd) => {
-  isAddOrUpdate.value = isAdd
-}
-
-provide('isAddOrUpdate', isAddOrUpdate)
-provide('updateAddOrUpdate', updateAddOrUpdate)
 
 function getRecruitList(params = {page: 1, pageSize: 5}){
   updateLoading(true)
@@ -66,10 +77,19 @@ function handleGetRecruitList(page) {
   getRecruitList(page)
 }
 
+function resetDrawerMessageData(){
+  drawerMessageData.career = ''
+  drawerMessageData.type = ''
+  drawerMessageData.number = ''
+  drawerMessageData.message = ''
+  drawerMessageData.salary = ''
+  drawerMessageData.freefl = ''
+}
+
 function handleAddRecruit(){
   updateShowDrawer(true)
   updateDrawerTitle('添加招聘信息')
-  updateAddOrUpdate(true)
+  resetDrawerMessageData()
 }
 
 </script>

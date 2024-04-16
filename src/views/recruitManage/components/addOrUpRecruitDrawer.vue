@@ -1,23 +1,23 @@
 <script setup>
 import { ref,reactive,inject,onMounted} from 'vue'
 import { ElMessage,ElMessageBox } from 'element-plus'
-import { sendRecruit, updateRecruit, getMessage } from '@/apis/Recruit'
+import { sendRecruit, updateRecruit} from '@/apis/Recruit'
 import { getType } from "@/apis/WorkType";
 
 const isShowDrawer = inject('isShowDrawer')
 const updateShowDrawer = inject('updateShowDrawer')
 const drawerTitle = inject('drawerTitle')
 const form = ref(null)
-const isAddOrUpdate = inject('isAddOrUpdate')
 const recruitId = inject('recruitId')
+const drawerMessageData = inject('drawerMessageData')
 
-const drawerMessageData = reactive({
-  career: '',
-  type: '',
-  number: '',
-  message: '',
-  salary: '',
-  freefl: ''
+const drawerMessage = reactive({
+  career: drawerMessageData.career,
+  type: drawerMessageData.type,
+  number: drawerMessageData.number,
+  message: drawerMessageData.message,
+  salary: drawerMessageData.salary,
+  freefl: drawerMessageData.freefl
 })
 
 const options = reactive({
@@ -35,23 +35,6 @@ onMounted(() => {
       })
     }
   })
-  if(!isAddOrUpdate.value) {
-    getMessage({recruitId: recruitId.value}).then(res => {
-      if (res.code === 200) {
-        drawerMessageData.career = res.data.career
-        drawerMessageData.type = res.data.type
-        drawerMessageData.number = res.data.number
-        drawerMessageData.message = res.data.message
-        drawerMessageData.salary = res.data.salary
-        drawerMessageData.freefl = res.data.freefl
-      } else {
-        ElMessage({
-          type: 'error',
-          message: '获取招聘信息失败'
-        })
-      }
-    })
-  }
 })
 
 const rules = {
@@ -91,12 +74,12 @@ function handleSubmit(form){
   ).then(() => {
     form.validate((valid) => {
       if (valid) {
-        let num = parseInt(drawerMessageData.number)
-        let salaryNum = parseFloat(drawerMessageData.salary)
-        let isFreefl = Boolean(drawerMessageData.freefl)
-        if(isAddOrUpdate.value){
-          sendRecruit({career: drawerMessageData.career, type: drawerMessageData.type,
-            number: num, message: drawerMessageData.message,
+        let num = parseInt(drawerMessage.number)
+        let salaryNum = parseFloat(drawerMessage.salary)
+        let isFreefl = Boolean(drawerMessage.freefl)
+        if(!recruitId.value){
+          sendRecruit({career: drawerMessage.career, type: drawerMessage.type,
+            number: num, message: drawerMessage.message,
             salary: salaryNum, freefl: isFreefl})
               .then(res => {
                  if (res.code === 200) {
@@ -112,8 +95,8 @@ function handleSubmit(form){
                  }
               })
         }else {
-          updateRecruit({recruitId: recruitId.value, career: drawerMessageData.career, type: drawerMessageData.type,
-            number: num, message: drawerMessageData.message,
+          updateRecruit({recruitId: recruitId.value, career: drawerMessage.career, type: drawerMessage.type,
+            number: num, message: drawerMessage.message,
             salary: salaryNum, freefl: isFreefl})
               .then(res => {
                  if (res.code === 200) {
@@ -140,14 +123,14 @@ function handleSubmit(form){
 
 <template>
   <el-drawer v-model="isShowDrawer" :direction="'rtl'">
-    <template #title>
+    <template #header>
       <div id="title-text">
         <h2>{{drawerTitle}}</h2>
       </div>
     </template>
     <template #default>
       <div>
-        <el-form ref="form" :model="drawerMessageData" :rules="rules" :label-position="'top'">
+        <el-form ref="form" :model="drawerMessage" :rules="rules" :label-position="'top'">
           <el-form-item label="岗位名:" prop="career">
             <el-input v-model="drawerMessageData.career" placeholder="请输入岗位名" />
           </el-form-item>
@@ -169,8 +152,8 @@ function handleSubmit(form){
           </el-form-item>
           <el-form-item label="是否管吃住:" prop="freefl">
             <el-radio-group v-model="drawerMessageData.freefl">
-              <el-radio label="true">是</el-radio>
-              <el-radio label="false">否</el-radio>
+              <el-radio value="true">是</el-radio>
+              <el-radio value="false">否</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="岗位要求:" prop="message">
