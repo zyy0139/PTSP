@@ -63,7 +63,7 @@ function getRecruitList(params = {page: 1, pageSize: 5}) {
 }
 
 onMounted(() => {
-  if(!isSearch){
+  if(isSearch.value){
     getRecruitListBySearch()
   }else {
     getRecruitList()
