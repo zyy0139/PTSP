@@ -24,6 +24,14 @@ export function getResumeList(params){
     })
 }
 
+export function getResumeListBySearch(params){
+    return request({
+        url:'/zyy/resume/getResumeListBySearch',
+        method:'GET',
+        params
+    })
+}
+
 export function getResume(){
     return request({
         url:'/zyy/resume/getResume',
