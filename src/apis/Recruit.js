@@ -70,3 +70,18 @@ export function getCareerList(){
         method: 'GET'
     })
 }
+
+export function getCountByDate(params){
+    return request({
+        url: '/zyy/recruit/getCountByDate',
+        method: 'GET',
+        params
+    })
+}
+
+export function getCountByType(){
+    return request({
+        url: '/zyy/recruit/getCountByType',
+        method: 'GET'
+    })
+}
