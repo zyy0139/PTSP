@@ -12,6 +12,18 @@ import { ElMessage } from 'element-plus'
 const isCollapse = ref(false)
 const userStore = userStores()
 const router = useRouter()
+const currentDate = ref('')
+
+function updateDate(){
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = (now.getMonth() + 1).toString().padStart(2, '0')
+  const day = now.getDate().toString().padStart(2, '0')
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const seconds = now.getSeconds().toString().padStart(2, '0');
+  currentDate.value = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+}
 
 onMounted(() => {
   getName().then(res => {
@@ -28,6 +40,7 @@ onMounted(() => {
       message: '获取用户名失败'
     })
   })
+  setInterval(updateDate, 1000)
 })
 
 function handleLogOut(command) {
@@ -91,6 +104,9 @@ function handleCollapse(){
             <el-icon><Expand /></el-icon>
           </template>
         </el-icon>
+        <div id="time-info">
+          {{currentDate}}
+        </div>
         <div id="company-info">
           <span>欢迎回来，{{userStore.name}}</span>
           <el-divider direction="vertical"></el-divider>
@@ -153,5 +169,13 @@ function handleCollapse(){
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+#time-info{
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  color: black;
 }
 </style>

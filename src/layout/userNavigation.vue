@@ -7,11 +7,12 @@ import { userStores } from '@/store/user'
 import { resetRouter } from '@/router'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 const userStore=userStores()
 const router=useRouter()
 const isCollapse=ref(false)
+const currentDate = ref('')
 
 getName().then(res=>{
   if(res.code===200){
@@ -26,6 +27,21 @@ getName().then(res=>{
     type:'error',
     message:'error'
   })
+})
+
+function updateDate(){
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = (now.getMonth() + 1).toString().padStart(2, '0')
+  const day = now.getDate().toString().padStart(2, '0')
+  const hours = now.getHours().toString().padStart(2, '0');
+  const minutes = now.getMinutes().toString().padStart(2, '0');
+  const seconds = now.getSeconds().toString().padStart(2, '0');
+  currentDate.value = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`
+}
+
+onMounted(() => {
+  setInterval(updateDate, 1000)
 })
 
 function handleLogOut(command) {
@@ -97,6 +113,9 @@ function handleCollapse(){
             <el-icon><Expand /></el-icon>
           </template>
         </el-icon>
+        <div id="time-info">
+          {{currentDate}}
+        </div>
         <div id="user-info">
           <span>欢迎回来，{{userStore.name}}</span>
           <el-divider direction="vertical"></el-divider>
@@ -158,5 +177,14 @@ function handleCollapse(){
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+#time-info{
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  color: black;
 }
 </style>
