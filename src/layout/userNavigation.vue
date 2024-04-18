@@ -1,33 +1,39 @@
 <script setup>
 import { HomeFilled, UserFilled, Management,
          List, Grid, Promotion, ArrowRight,
-         Fold, Expand } from "@element-plus/icons-vue";
+         Fold, Expand, Message } from "@element-plus/icons-vue";
 import { getName } from '@/apis/User'
 import { userStores } from '@/store/user'
 import { resetRouter } from '@/router'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, provide, reactive } from 'vue'
+import messageDialog from '@/layout/components/messageDialog.vue'
+import { getUserMessageList } from '@/apis/UserMessage'
 
 const userStore=userStores()
 const router=useRouter()
 const isCollapse=ref(false)
 const currentDate = ref('')
+const isShowDialog = ref(false)
+const userMessageList = reactive([])
+const allCount = ref(0)
+const noReadCount = ref(0)
 
-getName().then(res=>{
-  if(res.code===200){
-    if(res.data.userName ===''){
-      userStore.name=res.data.account
-    }else {
-      userStore.name=res.data.userName
-    }
-  }
-},()=>{
-  ElMessage({
-    type:'error',
-    message:'error'
-  })
-})
+const updateShowDialog = (status) => {
+  isShowDialog.value = status
+}
+
+provide('isShowDialog', isShowDialog)
+provide('updateShowDialog', updateShowDialog)
+
+const isLoading = ref(false)
+const updateLoading = (status) => {
+  isLoading.value = status
+}
+
+provide('isLoading', isLoading)
+provide('updateLoading', updateLoading)
 
 function updateDate(){
   const now = new Date()
@@ -41,7 +47,34 @@ function updateDate(){
 }
 
 onMounted(() => {
+  getName().then(res=>{
+    if(res.code===200){
+      if(res.data.userName ===''){
+        userStore.name=res.data.account
+      }else {
+        userStore.name=res.data.userName
+      }
+    }
+  },()=>{
+    ElMessage({
+      type:'error',
+      message:'error'
+    })
+  })
   setInterval(updateDate, 1000)
+  getUserMessageList().then( res => {
+    if(res.code ===200){
+      allCount.value = res.data.allCount
+      noReadCount.value = res.data.noReadCount
+      userMessageList.splice(0)
+      userMessageList.push(...res.data.messageList)
+    }else {
+      ElMessage({
+        type: 'error',
+        message: '获取消息列表失败'
+      })
+    }
+  })
 })
 
 function handleLogOut(command) {
@@ -63,6 +96,10 @@ function handleLogOut(command) {
 
 function handleCollapse(){
   isCollapse.value=!isCollapse.value
+}
+
+function handleShowDialog(){
+  updateShowDialog(true)
 }
 
 </script>
@@ -117,6 +154,19 @@ function handleCollapse(){
           {{currentDate}}
         </div>
         <div id="user-info">
+          <!-- 在 message-icon 外部添加角标 -->
+          <div id="message-icon" v-show="noReadCount > 0">
+            <el-icon @click="handleShowDialog"><Message /></el-icon>
+            <div class="message-badge">{{ noReadCount }}</div>
+          </div>
+          <div id="message-icon" v-show="noReadCount === 0">
+            <el-icon @click="handleShowDialog"><Message /></el-icon>
+          </div>
+          <message-dialog
+            :user-message-list="userMessageList"
+            :all-count="allCount"
+            :no-read-count="noReadCount"
+          />
           <span>欢迎回来，{{userStore.name}}</span>
           <el-divider direction="vertical"></el-divider>
           <el-dropdown placment="bottom" trigger="click" @command="handleLogOut">
@@ -186,5 +236,25 @@ function handleCollapse(){
   justify-content: center;
   margin-right: 20px;
   color: black;
+}
+
+#message-icon{
+  font-size: 24px;
+  margin-right: 10px;
+  position: relative;
+}
+
+#message-icon .message-badge{
+  position: absolute;
+  top: -5px; /* 调整角标位置 */
+  right: -5px; /* 调整角标位置 */
+  background-color: red;
+  color: white;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 10px;
+  line-height: 20px;
 }
 </style>
