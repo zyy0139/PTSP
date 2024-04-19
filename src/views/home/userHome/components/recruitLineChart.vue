@@ -47,7 +47,7 @@ function updateChart(title, chart){
     ]
   }
   getCountByDate(params).then( res => {
-    option.xAxis.data = res.data.map(item => formatDate(item.date, 'YY-MM-DD'))
+    option.xAxis.data = res.data.map(item => formatDate(item.date, 'MM-DD'))
     option.series[0].data = res.data.map(item => item.newCount)
     chart.setOption(option)
     updateLoading(false)
@@ -120,7 +120,7 @@ function initChart(chart){
     ]
   }
   getCountByDate(params).then( res => {
-    option.xAxis.data = res.data.map(item => formatDate(item.date, 'YY-MM-DD'))
+    option.xAxis.data = res.data.map(item => formatDate(item.date, 'MM-DD'))
     option.series[0].data = res.data.map(item => item.newCount)
     chart.setOption(option)
     updateLoading(false)
