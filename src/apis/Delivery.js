@@ -1,10 +1,10 @@
 import request from "@/utils/axios.js"
 
-export function addDelivery(data){
+export function addDelivery(params){
     return request({
         url:'/zyy/delivery/addDelivery',
         method:'POST',
-        data
+        params
     })
 }
 
@@ -21,5 +21,20 @@ export function admitDelivery(params){
         url:'/zyy/delivery/admitDelivery',
         method:'DELETE',
         params
+    })
+}
+
+export function getCountByDate(params){
+    return request({
+        url:'/zyy/delivery/getCountByDate',
+        method:'GET',
+        params
+    })
+}
+
+export function getCountByType(){
+    return request({
+        url:'/zyy/delivery/getCountByType',
+        method:'GET'
     })
 }
