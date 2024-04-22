@@ -3,6 +3,7 @@ import { ref,inject, defineProps, defineEmits, provide } from 'vue'
 import { ElMessage } from 'element-plus'
 import { useRouter } from 'vue-router'
 import { passDelivery, admitDelivery } from '@/apis/Delivery'
+import { formatDate } from '@/utils/formatDate'
 
 const props = defineProps({
   resumeList: {
@@ -95,12 +96,17 @@ function handleExpand(row){
           </template>
         </el-table-column>
         <el-table-column label="学生ID" prop="userId" width="150" />
-        <el-table-column label="学生姓名" prop="userName" width="200" />
+        <el-table-column label="学生姓名" prop="userName" width="150" />
         <el-table-column label="性别" prop="userSex" width="100" />
         <el-table-column label="年龄" prop="userAge" width="100" />
         <el-table-column label="学校" prop="userSchool" width="200" />
         <el-table-column label="专业" prop="userProfession" width="200" />
         <el-table-column label="应聘岗位" prop="recruitName" width="200" />
+        <el-table-column label="投递时间" prop="sendDate" width="200" >
+          <template #default="scope">
+            {{formatDate(new Date(props.resumeList[scope.$index].sendDate), 'YY-MM-DD')}}
+          </template>
+        </el-table-column>
         <el-table-column label="操作" width="200" fixed="right">
           <template #default="scope">
             <el-button type="text" @click="handleExpand(scope.row)">详情</el-button>
