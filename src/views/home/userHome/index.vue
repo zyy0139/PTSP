@@ -6,6 +6,7 @@ import { getCountByDate, getMessageList } from '@/apis/Recruit'
 import { ref,reactive,onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
 import { formatDate } from '@/utils/formatDate'
+import router from '@/router/index'
 
 const isAdmit = ref(false)
 const admitMessage = reactive({
@@ -19,6 +20,7 @@ const weekSendCount = ref(0)
 const allSendCount = ref(0)
 const start = formatDate(new Date((Date.now() - 3600 * 1000 * 24 * 7)), 'YY-MM-DD')
 const end = formatDate(new Date(Date.now()), 'YY-MM-DD')
+const recommendCount = ref(0)
 
 onMounted(() => {
   getAdmit().then( res => {
@@ -45,11 +47,19 @@ onMounted(() => {
   })
 })
 
+function handleRouter(status){
+  if (status === 'company'){
+    router.push('companyList')
+  }else {
+    router.push('recruitList')
+  }
+}
+
 </script>
 
 <template>
-  <div class="user-admit">
-    <span>录用状态:
+  <el-card class="user-admit-card">
+    <span class="admit-text">录用状态:
       <template v-if="isAdmit">
         <span id="admit-true">{{admitMessage.true}}</span>
       </template>
@@ -57,63 +67,70 @@ onMounted(() => {
         <span id="admit-false">{{admitMessage.false}}</span>
       </template>
     </span>
-  </div>
-  <div class="chart-section">
-    <span class="chart-title">兼职市场统计</span>
-    <div class="count-statistic">
-      <el-row>
-        <el-col :span="6">
-          <el-statistic title="昨日新增" :value="yesterdaySendCount" />
-        </el-col>
-        <el-col :span="6">
-          <el-statistic title="今日新增" :value="todaySendCount" />
-        </el-col>
-        <el-col :span="6">
-          <el-statistic title="本周新增" :value="weekSendCount" />
-        </el-col>
-        <el-col :span="6">
-          <el-statistic title="总计数目" :value="allSendCount" />
-        </el-col>
-      </el-row>
-    </div>
-    <div class="recruit-chart">
-      <recruit-line-chart class="recruit-line-chart" />
-      <recruit-pie-chart class="recruit-pie-chart" />
-    </div>
-  </div>
+    <el-button class="admit-button" type="primary" @click="handleRouter(company)">查看公司信息</el-button>
+    <el-button type="primary" @click="handleRouter(recruit)">查看岗位信息</el-button>
+  </el-card>
+  <el-row>
+    <el-col :span="16">
+      <el-card class="today-recommend-card">
+        <span class="recommend-title">今日推荐</span>
+        <el-empty v-show="recommendCount === 0" description="今日暂无推荐岗位" image-size="100px" />
+      </el-card>
+    </el-col>
+    <el-col :span="8">
+      <el-card class="statistics-card">
+        <span class="chart-title">兼职市场统计</span>
+        <div class="count-statistic">
+          <el-row class="top-row">
+            <el-col :span="12">
+              <el-statistic title="昨日新增" :value="yesterdaySendCount" />
+            </el-col>
+            <el-col :span="12">
+              <el-statistic title="今日新增" :value="todaySendCount" />
+            </el-col>
+          </el-row>
+          <el-row class="footer-row">
+            <el-col :span="12">
+              <el-statistic title="本周新增" :value="weekSendCount" />
+            </el-col>
+            <el-col :span="12">
+              <el-statistic title="总计数目" :value="allSendCount"  />
+            </el-col>
+          </el-row>
+        </div>
+      </el-card>
+    </el-col>
+  </el-row>
+  <el-row class="chart-row">
+    <el-col :span="16">
+      <el-card class="recruit-line-card">
+        <recruit-line-chart class="recruit-line-chart" />
+      </el-card>
+    </el-col>
+    <el-col :span="8">
+      <el-card class="recruit-pie-card">
+        <recruit-pie-chart class="recruit-pie-chart" />
+      </el-card>
+    </el-col>
+  </el-row>
 </template>
 
 <style scoped>
-.user-admit {
-  margin-bottom: 10px;
-  font-size: 20px;
-}
-.recruit-chart {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-}
 .recruit-line-chart {
-  width: 50%;
+  width: 100%;
   height: 300px;
   flex: 1;
 }
 .recruit-pie-chart {
-  width: 50%;
+  width: 100%;
   height: 300px;
   flex: 1;
-}
-.chart-section {
-  margin-top: 50px;
 }
 .chart-title {
   font-size: 24px;
   font-weight: bold;
   display: flex;
   justify-content: center;
-}
-.el-col{
-  text-align: center;
 }
 .count-statistic {
   margin-top: 20px;
@@ -124,5 +141,42 @@ onMounted(() => {
 
 #admit-false {
   color: red;
+}
+.admit-text {
+  font-size: 18px;
+}
+.user-admit-card {
+  margin-top: 20px;
+}
+.statistics-card {
+  margin-top: 10px;
+  height: 300px;
+}
+.count-statistic .el-col{
+  text-align: center;
+}
+.count-statistic .top-row{
+  margin-top: 30px;
+}
+.count-statistic .footer-row{
+  margin-top: 30px;
+}
+.today-recommend-card {
+  margin-top: 10px;
+  height: 300px;
+}
+.recommend-title {
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+}
+.recruit-line-card {
+  margin-top: 10px;
+}
+.recruit-pie-card {
+  margin-top: 10px;
+}
+.admit-button {
+  margin-left: 70%;
 }
 </style>
