@@ -1,12 +1,14 @@
 ﻿<script setup>
 import recruitLineChart from '@/views/home/userHome/components/recruitLineChart.vue'
 import recruitPieChart from '@/views/home/userHome/components/recruitPieChart.vue'
+import todayRecommendTable from '@/views/home/userHome/components/todayRecommendTable.vue'
 import { getAdmit } from '@/apis/User'
 import { getCountByDate, getMessageList } from '@/apis/Recruit'
-import { ref,reactive,onMounted } from 'vue'
+import { ref,reactive,onMounted,provide } from 'vue'
 import { ElMessage } from 'element-plus'
 import { formatDate } from '@/utils/formatDate'
 import router from '@/router/index'
+import { getByTodayRecommend } from '@/apis/Recruit'
 
 const isAdmit = ref(false)
 const admitMessage = reactive({
@@ -21,6 +23,31 @@ const allSendCount = ref(0)
 const start = formatDate(new Date((Date.now() - 3600 * 1000 * 24 * 7)), 'YY-MM-DD')
 const end = formatDate(new Date(Date.now()), 'YY-MM-DD')
 const recommendCount = ref(0)
+const isLoading = ref(false)
+const recruitDataList = reactive([])
+
+const updateLoading = (status) => {
+  isLoading.value = status
+}
+
+provide('isLoading', isLoading)
+provide('updateLoading', updateLoading)
+
+const recruitId = ref(null)
+const updateRecruitId = (status) => {
+  recruitId.value = status
+}
+
+provide('recruitId', recruitId)
+provide('updateRecruitId', updateRecruitId)
+
+const isShowDialog = ref(false)
+const updateShowDialog = (status) => {
+  isShowDialog.value = status
+}
+
+provide('isShowDialog', isShowDialog)
+provide('updateShowDialog', updateShowDialog)
 
 onMounted(() => {
   getAdmit().then( res => {
@@ -43,6 +70,13 @@ onMounted(() => {
   getMessageList({ page: 1, pageSize: 5 }).then( res => {
     if (res.code === 200) {
       allSendCount.value = res.data.total
+    }
+  })
+  getByTodayRecommend().then( res => {
+    if (res.code === 200) {
+      recommendCount.value = res.data.total
+      recruitDataList.splice(0)
+      recruitDataList.push(...res.data.recruitList)
     }
   })
 })
@@ -75,6 +109,7 @@ function handleRouter(status){
       <el-card class="today-recommend-card">
         <span class="recommend-title">今日推荐</span>
         <el-empty v-show="recommendCount === 0" description="今日暂无推荐岗位" image-size="100px" />
+        <today-recommend-table v-show="recommendCount > 0" :recruit-list="recruitDataList" :count="recommendCount" />
       </el-card>
     </el-col>
     <el-col :span="8">
