@@ -49,9 +49,9 @@ const rules = {
     { required: true, message: '请输入公司电话', trigger: 'blur' },
     { pattern: /^1[34578]\d{9}$/, message: '请输入正确的手机号码', trigger: 'blur' }
   ],
-  basicAddress: [
-    { required: true, message: '请选择公司地址', trigger: 'change' }
-  ],
+  // basicAddress: [
+  //   { required: true, message: '请选择公司地址', trigger: 'change' }
+  // ],
   detailAddress: [
     { required: true, message: '请输入详细地址', trigger: 'blur' },
     { min: 2, max: 100, message: '长度在 2 到 100 个字符', trigger: 'blur' }
