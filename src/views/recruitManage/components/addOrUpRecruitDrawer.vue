@@ -50,11 +50,9 @@ const rules = {
   ],
   number: [
     { required: true, message: '请输入招聘人数', trigger: 'blur' },
-    { type: 'number', message: '请输入数字', trigger: 'blur' }
   ],
   salary: [
     { required: true, message: '请输入薪资待遇', trigger: 'blur' },
-    { type: 'number', message: '请输入数字', trigger: 'blur' }
   ],
   message: [
     { required: true, message: '请输入岗位要求', trigger: 'blur' },
@@ -130,12 +128,12 @@ function handleSubmit(form){
     </template>
     <template #default>
       <div>
-        <el-form ref="form" :model="drawerMessage" :rules="rules" :label-position="'top'">
+        <el-form ref="form" :model="drawerMessage" :label-position="'top'" :rules="rules">
           <el-form-item label="岗位名:" prop="career">
-            <el-input v-model="drawerMessageData.career" placeholder="请输入岗位名" />
+            <el-input v-model="drawerMessage.career" placeholder="请输入岗位名" />
           </el-form-item>
           <el-form-item label="岗位类型:" prop="type">
-            <el-select v-model="drawerMessageData.type">
+            <el-select v-model="drawerMessage.type">
               <el-option
                   v-for="type in options.typeList"
                   :key="type"
@@ -145,19 +143,19 @@ function handleSubmit(form){
             </el-select>
           </el-form-item>
           <el-form-item label="招聘人数:" prop="number">
-            <el-input v-model="drawerMessageData.number" placeholder="请输入招聘人数" />
+            <el-input v-model="drawerMessage.number" placeholder="请输入招聘人数" />
           </el-form-item>
           <el-form-item label="薪资待遇:" prop="salary">
-            <el-input v-model="drawerMessageData.salary" placeholder="请输入薪资待遇" />
+            <el-input v-model="drawerMessage.salary" placeholder="请输入薪资待遇" />
           </el-form-item>
           <el-form-item label="是否管吃住:" prop="freefl">
-            <el-radio-group v-model="drawerMessageData.freefl">
+            <el-radio-group v-model="drawerMessage.freefl">
               <el-radio value="true">是</el-radio>
               <el-radio value="false">否</el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item label="岗位要求:" prop="message">
-            <el-input type="textarea" v-model="drawerMessageData.message" placeholder="请输入岗位要求" />
+            <el-input type="textarea" v-model="drawerMessage.message" placeholder="请输入岗位要求" />
           </el-form-item>
         </el-form>
       </div>
