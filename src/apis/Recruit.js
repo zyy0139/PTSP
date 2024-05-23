@@ -32,6 +32,14 @@ export function getMessage(params){
     })
 }
 
+export function getMessageInfo(params){
+    return request({
+        url:'/zyy/recruit/getMessageInfo',
+        method:'GET',
+        params
+    })
+}
+
 export function getMessageList(params){
     return request({
         url:'/zyy/recruit/getMessageList',
@@ -83,5 +91,12 @@ export function getCountByType(){
     return request({
         url: '/zyy/recruit/getCountByType',
         method: 'GET'
+    })
+}
+
+export function getByTodayRecommend(){
+    return request({
+        url: '/zyy/recruit/getByTodayRecommend',
+        method: 'GET',
     })
 }

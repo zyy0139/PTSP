@@ -38,3 +38,18 @@ export function getResume(){
         method:'GET'
     })
 }
+
+export function getResumeInfo(params){
+    return request({
+        url:'/zyy/resume/getResumeInfo',
+        method:'GET',
+        params
+    })
+}
+
+export function getByTodayRecommend(){
+    return request({
+        url:'/zyy/resume/getByTodayRecommend',
+        method:'GET'
+    })
+}
