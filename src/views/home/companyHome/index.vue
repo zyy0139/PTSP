@@ -83,11 +83,11 @@ provide('updateShowDialog', updateShowDialog)
 <template>
   <el-card class="resume-count-card">
     <span class="count-text">简历待处理数：{{allSendCount}}条</span>
-    <el-button class="resume-btn" type="primary" @click="handleRouter(resume)">管理简历</el-button>
+    <el-button class="resume-btn" type="primary" @click="handleRouter('resume')">管理简历</el-button>
   </el-card>
   <el-card class="recruit-count-card">
     <span class="count-text">招聘信息数：{{recruitCount}}条</span>
-    <el-button class="recruit-btn" type="primary" @click="handleRouter(recruit)">管理招聘信息</el-button>
+    <el-button class="recruit-btn" type="primary" @click="handleRouter('recruit')">管理招聘信息</el-button>
   </el-card>
   <el-row>
     <el-col :span="16">
