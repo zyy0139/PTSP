@@ -101,8 +101,8 @@ function handleRouter(status){
         <span id="admit-false">{{admitMessage.false}}</span>
       </template>
     </span>
-    <el-button class="admit-button" type="primary" @click="handleRouter(company)">查看公司信息</el-button>
-    <el-button type="primary" @click="handleRouter(recruit)">查看岗位信息</el-button>
+    <el-button class="admit-button" type="primary" @click="handleRouter('company')">查看公司信息</el-button>
+    <el-button type="primary" @click="handleRouter('recruit')">查看岗位信息</el-button>
   </el-card>
   <el-row>
     <el-col :span="16">
