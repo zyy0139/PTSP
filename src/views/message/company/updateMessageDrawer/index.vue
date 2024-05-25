@@ -75,6 +75,7 @@ function handleUpdateMessage(form) {
       if (valid) {
         drawerMessage.basicAddress=options.addressList.join('')
         drawerMessage.address=drawerMessage.basicAddress+drawerMessage.detailAddress
+        drawerMessage.createDate = formatDate(new Date(drawerMessage.createDate), 'YY-MM-DD')
         updateByCompanyId({name: drawerMessage.name, phone: drawerMessage.phone,
                                 address: drawerMessage.address, createDate: drawerMessage.createDate})
             .then( res => {
