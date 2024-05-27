@@ -77,7 +77,7 @@ function handleAddDelivery(){
         {{ props.recruitMessage.companyEmail }}
       </el-form-item>
       <el-form-item label="包吃住:">
-        {{ props.recruitMessage.freefl }}
+        {{ props.recruitMessage.freefl ? '是' : '否' }}
       </el-form-item>
       <el-form-item label="发布时间:">
         {{ formatDate(new Date(props.recruitMessage.releaseDate), 'YY-MM-DD') }}
