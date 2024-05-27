@@ -60,6 +60,11 @@ function getRecruitList(params = {page: 1, pageSize: 5}){
       recruitDataList.splice(0)
       recruitDataList.push(...res.data.recruitList)
       updateLoading(false)
+    }else if(res.code === 406){
+      ElMessage({
+        type: 'info',
+        message: '暂无招聘信息'
+      })
     }else {
       ElMessage({
         type: 'error',
@@ -67,6 +72,7 @@ function getRecruitList(params = {page: 1, pageSize: 5}){
       })
     }
   })
+  updateLoading(false)
 }
 
 onMounted(() => {
