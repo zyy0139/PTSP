@@ -107,7 +107,7 @@ function handleRouter(status){
   <el-row>
     <el-col :span="16">
       <el-card class="today-recommend-card">
-        <span class="recommend-title">今日推荐</span>
+        <span class="recommend-title">今日岗位推荐</span>
         <el-empty v-show="recommendCount === 0" description="今日暂无推荐岗位" image-size="100px" />
         <today-recommend-table v-show="recommendCount > 0" :recruit-list="recruitDataList" :count="recommendCount" />
       </el-card>

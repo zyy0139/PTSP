@@ -92,7 +92,7 @@ provide('updateShowDialog', updateShowDialog)
   <el-row>
     <el-col :span="16">
       <el-card class="today-recommend-card">
-        <span class="recommend-title">今日推荐</span>
+        <span class="recommend-title">今日简历推荐</span>
         <el-empty v-show="recommendCount === 0" description="今日暂无推荐简历" image-size="100px" />
         <today-recommend-table v-show="recommendCount > 0" :resume-list="resumeDateList" :count="recommendCount" />
       </el-card>
