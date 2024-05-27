@@ -95,11 +95,11 @@ function handleGetMore(index){
 <template>
   <div id="recruit-table" v-loading="isLoading">
     <div id="recruit-list">
-      <el-table id="table-recruit" ref="table" :data="props.recruitList" :default-sort="{ prop: 'releaseDate' , order: 'descending'}" >
+      <el-table id="table-recruit" ref="table" :data="props.recruitList" >
         <el-table-column prop="recruitId" label="招聘ID" width="100" />
         <el-table-column prop="companyName" label="公司名称" width="150" />
         <el-table-column prop="career" label="职位名称" width="150" />
-        <el-table-column prop="releaseDate" label="发布时间" width="200" sortable>
+        <el-table-column prop="releaseDate" label="发布时间" width="200" >
           <template #default="{row}">
             {{formatDate(new Date(Date.parse(row.releaseDate)),'YY-MM-DD')}}
           </template>

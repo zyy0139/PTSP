@@ -77,7 +77,7 @@ function handleTurnPage(page){
 <template>
   <div id="company-table" v-loading="isLoading">
     <div id="company-list">
-      <el-table id="table-company" ref="table" :data="props.companyList" :default-sort="{ prop: 'companyCreateDate', order: 'descending' }" >
+      <el-table id="table-company" ref="table" :data="props.companyList" >
         <el-table-column type="expand" width="1">
           <template #default="scope">
             <recruit-table

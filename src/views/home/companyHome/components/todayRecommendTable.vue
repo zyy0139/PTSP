@@ -118,11 +118,11 @@ function handleGetMore(index){
 <template>
   <div id="resume-table" v-loading="isLoading">
     <div id="resume-list">
-      <el-table id="table-resume" ref="table" :data="props.resumeList" :default-sort="{ prop: 'sendDate' , order: 'descending'}">
+      <el-table id="table-resume" ref="table" :data="props.resumeList" >
         <el-table-column prop="resumeId" label="简历Id" width="100" />
         <el-table-column prop="userName" label="姓名" width="100" />
         <el-table-column prop="recruitName" label="投递岗位" width="150" />
-        <el-table-column prop="sendDate" label="投递日期" width="150" sortable>
+        <el-table-column prop="sendDate" label="投递日期" width="150">
           <template #default="{row}">
             {{formatDate(new Date(Date.parse(row.sendDate)),'YY-MM-DD')}}
           </template>
