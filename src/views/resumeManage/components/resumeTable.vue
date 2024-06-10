@@ -50,7 +50,7 @@ function handleAdmit() {
     }
   })
   updateLoading(false)
-  window.location.reload()
+  // window.location.reload()
 }
 
 function handlePass() {
@@ -69,7 +69,7 @@ function handlePass() {
     }
   })
   updateLoading(false)
-  window.location.reload()
+  // window.location.reload()
 }
 
 function handleExpand(row){

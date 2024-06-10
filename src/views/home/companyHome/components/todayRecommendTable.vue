@@ -4,7 +4,6 @@ import { ElMessage } from 'element-plus'
 import { formatDate } from '@/utils/formatDate'
 import { passDelivery, admitDelivery } from '@/apis/Delivery'
 import { getResumeInfo } from '@/apis/Resume'
-import resumeDialog from '@/views/home/companyHome/components/resumeDialog.vue'
 
 const props =defineProps({
   resumeList:{
@@ -52,7 +51,7 @@ function handleAdmit() {
     }
   })
   updateLoading(false)
-  window.location.reload()
+  // window.location.reload()
 }
 
 function handlePass() {
@@ -71,26 +70,28 @@ function handlePass() {
     }
   })
   updateLoading(false)
-  window.location.reload()
+  // window.location.reload()
 }
 
 const updateRecruitId = (status) => {
   recruitId.value = status
 }
 
-const resumeMessage = reactive({
-  userName: '',
-  userSex: '',
-  userAge: '',
-  userAddress: '',
-  userSchool: '',
-  userPhone: '',
-  userProfession: '',
-  recruitName: '',
-  skill: '',
-  experience: '',
-  sendDate: ''
-})
+// const resumeMessage = reactive({
+//   userName: '',
+//   userSex: '',
+//   userAge: '',
+//   userAddress: '',
+//   userSchool: '',
+//   userPhone: '',
+//   userProfession: '',
+//   recruitName: '',
+//   skill: '',
+//   experience: '',
+//   sendDate: ''
+// })
+
+const resumeMessage = inject('resumeMessage')
 
 function handleGetMore(index){
   updateResumeId(props.resumeList[index].resumeId)
@@ -130,7 +131,6 @@ function handleGetMore(index){
         <el-table-column label="操作" width="200" fixed="right">
           <template #default="scope">
             <el-button type="text" @click="handleGetMore(scope.$index)">详情</el-button>
-            <resume-dialog :resume-message="resumeMessage" />
             <el-popconfirm
                 title="确认录用？"
                 @confirm="handleAdmit"

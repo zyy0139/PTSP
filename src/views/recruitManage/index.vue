@@ -95,6 +95,7 @@ function resetDrawerMessageData(){
 function handleAddRecruit(){
   updateShowDrawer(true)
   updateDrawerTitle('添加招聘信息')
+  updateRecruitId('')
   resetDrawerMessageData()
 }
 

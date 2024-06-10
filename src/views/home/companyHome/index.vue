@@ -2,6 +2,7 @@
 import resumeLineChart from '@/views/home/companyHome/components/resumeLineChart.vue'
 import resumePieChart from '@/views/home/companyHome/components/resumePieChart.vue'
 import todayRecommendTable from '@/views/home/companyHome/components/todayRecommendTable.vue'
+import resumeDialog from '@/views/home/companyHome/components/resumeDialog.vue'
 import { ref,reactive,onMounted,provide } from 'vue'
 import { getCountByDate } from '@/apis/Delivery'
 import { getResumeList, getByTodayRecommend } from '@/apis/Resume'
@@ -78,6 +79,22 @@ const updateShowDialog = (status) => {
 provide('isShowDialog', isShowDialog)
 provide('updateShowDialog', updateShowDialog)
 
+const resumeMessage = reactive({
+  userName: '',
+  userSex: '',
+  userAge: '',
+  userAddress: '',
+  userSchool: '',
+  userPhone: '',
+  userProfession: '',
+  recruitName: '',
+  skill: '',
+  experience: '',
+  sendDate: ''
+})
+
+provide('resumeMessage', resumeMessage)
+
 </script>
 
 <template>
@@ -95,6 +112,7 @@ provide('updateShowDialog', updateShowDialog)
         <span class="recommend-title">今日简历推荐</span>
         <el-empty v-show="recommendCount === 0" description="今日暂无推荐简历" image-size="100px" />
         <today-recommend-table v-show="recommendCount > 0" :resume-list="resumeDateList" :count="recommendCount" />
+        <resume-dialog :resume-message="resumeMessage" />
       </el-card>
     </el-col>
     <el-col :span="8">
@@ -169,10 +187,10 @@ provide('updateShowDialog', updateShowDialog)
   font-size: 18px;
 }
 .resume-btn{
-  margin-left: 80%;
+  margin-left: 75%;
 }
 .recruit-btn{
-  margin-left: 80%;
+  margin-left: 75%;
 }
 .resume-count-card{
   margin-top: 20px;

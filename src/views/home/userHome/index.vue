@@ -2,6 +2,7 @@
 import recruitLineChart from '@/views/home/userHome/components/recruitLineChart.vue'
 import recruitPieChart from '@/views/home/userHome/components/recruitPieChart.vue'
 import todayRecommendTable from '@/views/home/userHome/components/todayRecommendTable.vue'
+import recruitDialog from '@/views/home/userHome/components/recuitDialog.vue'
 import { getAdmit } from '@/apis/User'
 import { getCountByDate, getMessageList } from '@/apis/Recruit'
 import { ref,reactive,onMounted,provide } from 'vue'
@@ -48,6 +49,21 @@ const updateShowDialog = (status) => {
 
 provide('isShowDialog', isShowDialog)
 provide('updateShowDialog', updateShowDialog)
+
+const recruitMessage = reactive({
+  career: '',
+  companyName: '',
+  companyAddress: '',
+  number: '',
+  salary: '',
+  message: '',
+  companyPhone: '',
+  companyEmail: '',
+  freefl: '',
+  releaseDate: ''
+})
+
+provide('recruitMessage', recruitMessage)
 
 onMounted(() => {
   getAdmit().then( res => {
@@ -110,6 +126,7 @@ function handleRouter(status){
         <span class="recommend-title">今日岗位推荐</span>
         <el-empty v-show="recommendCount === 0" description="今日暂无推荐岗位" image-size="100px" />
         <today-recommend-table v-show="recommendCount > 0" :recruit-list="recruitDataList" :count="recommendCount" />
+        <recruit-dialog :recruit-message="recruitMessage" />
       </el-card>
     </el-col>
     <el-col :span="8">

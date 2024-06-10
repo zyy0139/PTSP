@@ -111,7 +111,7 @@ function handleSubmit(form){
               })
         }
         updateShowDrawer(false)
-        window.location.reload()
+        // window.location.reload()
       }
     })
   })

@@ -55,11 +55,11 @@ function handleDeleteRead() {
         })
       }
     })
-    updateLoading(false)
-    // 刷新消息列表
-    window.location.reload()
-    updateShowDialog(true)
   })
+  updateLoading(false)
+  // 刷新消息列表
+  // window.location.reload()
+  updateShowDialog(true)
 }
 
 function getMessageId(index){
@@ -91,11 +91,11 @@ function deleteMessage(index){
         })
       }
     })
-    updateLoading(false)
-    // 刷新消息列表
-    window.location.reload()
-    updateShowDialog(true)
   })
+  updateLoading(false)
+  // 刷新消息列表
+  // window.location.reload()
+  updateShowDialog(true)
 }
 
 function handleRead(index){

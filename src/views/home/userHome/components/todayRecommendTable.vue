@@ -3,7 +3,6 @@ import { ref,inject,defineProps,reactive } from 'vue'
 import { ElMessage } from 'element-plus'
 import { addDelivery } from '@/apis/Delivery'
 import { formatDate } from '@/utils/formatDate'
-import recruitDialog from '@/views/home/userHome/components/recuitDialog.vue'
 import { getMessageInfo } from '@/apis/Recruit'
 
 const props = defineProps({
@@ -25,18 +24,19 @@ const updateShowDialog = inject('updateShowDialog')
 const companyName = ref('')
 const table = ref(null)
 
-const recruitMessage = reactive({
-  career: '',
-  companyName: '',
-  companyAddress: '',
-  number: '',
-  salary: '',
-  message: '',
-  companyPhone: '',
-  companyEmail: '',
-  freefl: '',
-  releaseDate: ''
-})
+// const recruitMessage = reactive({
+//   career: '',
+//   companyName: '',
+//   companyAddress: '',
+//   number: '',
+//   salary: '',
+//   message: '',
+//   companyPhone: '',
+//   companyEmail: '',
+//   freefl: '',
+//   releaseDate: ''
+// })
+const recruitMessage = inject('recruitMessage')
 
 function getRecruitIdAndCompanyName(index){
   updateRecruitId(props.recruitList[index].recruitId)
@@ -107,7 +107,6 @@ function handleGetMore(index){
         <el-table-column label="操作" width="200" fixed="right">
           <template #default="scope">
             <el-button type="text" @click="handleGetMore(scope.$index)">查看详情</el-button>
-            <recruit-dialog :recruit-message="recruitMessage" />
             <el-popconfirm
                 title="确认投递？"
                 @confirm="handleAddDelivery"
